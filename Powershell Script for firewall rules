@@ -1,0 +1,20 @@
+#enable WinRM
+winrm quickconfig -quiet
+
+#Firewall enable
+Set-NetFirewallProfile -Enabled True
+
+$IP = "10.31.119.29"
+
+#WinRM
+New-NetFirewallRule -DisplayName “AllowWinRM” –RemoteAddress $IP -Direction Inbound -Protocol TCP –LocalPort 5985 -Action Allow
+
+#TCP
+New-NetFirewallRule -DisplayName “AllowTCP"  -Direction Inbound -Protocol TCP -Action Allow
+
+#UDP
+New-NetFirewallRule -DisplayName “AllowTCP"  -Direction Inbound -Protocol UDP -Action Allow
+
+#ICMP
+New-NetFirewallRule -DisplayName “Allow inbound ICMPv4” -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow
+New-NetFirewallRule -DisplayName “Allow inbound ICMPv6” -Direction Inbound -Protocol ICMPv6 -IcmpType 8 -Action Allow
